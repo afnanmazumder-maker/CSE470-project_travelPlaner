@@ -2,7 +2,7 @@ from fastapi import FastAPI
 
 from app.schemas import RecommendationRequest, RecommendationResponse
 
-app = FastAPI(title="Voyenta AI Service")
+app = FastAPI(title="Voyenta Tour Planner")
 
 
 @app.get("/health")
