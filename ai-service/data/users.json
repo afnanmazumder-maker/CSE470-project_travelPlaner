@@ -1,0 +1,5 @@
+[
+  {"user": "history_buff", "interest_weights": {"history": 0.9, "museum": 0.8, "architecture": 0.6}},
+  {"user": "beach_foodie", "interest_weights": {"beach": 0.9, "food": 0.8, "nature": 0.3}},
+  {"user": "new_user", "interest_weights": {}}
+]

@@ -1,0 +1,22 @@
+[
+  {"id": 1, "name": "National Museum of History", "tags": ["museum", "history"], "popularity": 0.8},
+  {"id": 2, "name": "Old Town Walking Quarter", "tags": ["history", "architecture"], "popularity": 0.7},
+  {"id": 3, "name": "Sunset Beach", "tags": ["beach", "nature"], "popularity": 0.9},
+  {"id": 4, "name": "Coral Reef Snorkeling", "tags": ["beach", "adventure", "nature"], "popularity": 0.6},
+  {"id": 5, "name": "Central Food Market", "tags": ["food", "shopping"], "popularity": 0.85},
+  {"id": 6, "name": "Street Food Night Tour", "tags": ["food", "nightlife"], "popularity": 0.65},
+  {"id": 7, "name": "Modern Art Gallery", "tags": ["art", "museum"], "popularity": 0.55},
+  {"id": 8, "name": "Cathedral of the Old City", "tags": ["architecture", "history"], "popularity": 0.75},
+  {"id": 9, "name": "Mountain Summit Trail", "tags": ["nature", "adventure"], "popularity": 0.5},
+  {"id": 10, "name": "Riverside Night Bars", "tags": ["nightlife"], "popularity": 0.6},
+  {"id": 11, "name": "Grand Shopping Arcade", "tags": ["shopping", "architecture"], "popularity": 0.7},
+  {"id": 12, "name": "Botanical Gardens", "tags": ["nature", "art"], "popularity": 0.45},
+  {"id": 13, "name": "Ancient Fortress", "tags": ["history", "adventure"], "popularity": 0.7},
+  {"id": 14, "name": "Cooking Class Experience", "tags": ["food", "art"], "popularity": 0.4},
+  {"id": 15, "name": "Science and Design Museum", "tags": ["museum", "art"], "popularity": 0.5},
+  {"id": 16, "name": "Island Kayak Tour", "tags": ["adventure", "beach"], "popularity": 0.55},
+  {"id": 17, "name": "Rooftop Live Music Club", "tags": ["nightlife", "art"], "popularity": 0.5},
+  {"id": 18, "name": "Heritage Craft Bazaar", "tags": ["shopping", "history"], "popularity": 0.6},
+  {"id": 19, "name": "National Park Wildlife Safari", "tags": ["nature", "adventure"], "popularity": 0.65},
+  {"id": 20, "name": "Skyline Observation Tower", "tags": ["architecture", "nightlife"], "popularity": 0.8}
+]
