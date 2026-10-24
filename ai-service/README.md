@@ -12,11 +12,13 @@ From the `ai-service` folder:
 python -m venv venv
 venv\Scripts\activate          # Mac/Linux: source venv/bin/activate
 pip install -r requirements.txt
-uvicorn app.main:app --reload
+uvicorn app.main:app --reload --port 8001
 ```
 
-- Service: http://127.0.0.1:8000
-- Interactive docs (try every endpoint in the browser): http://127.0.0.1:8000/docs
+Port 8001 is used because the Laravel backend runs on 8000.
+
+- Service: http://127.0.0.1:8001
+- Interactive docs (try every endpoint in the browser): http://127.0.0.1:8001/docs
 
 ## Running the tests
 
