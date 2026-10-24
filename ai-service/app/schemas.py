@@ -1,5 +1,6 @@
 from pydantic import BaseModel, Field
-
+from typing import Literal
+from pydantic import BaseModel, Field
 
 class Attraction(BaseModel):
     id: int
@@ -24,3 +25,12 @@ class Recommendation(BaseModel):
 class RecommendationResponse(BaseModel):
     recommendations: list[Recommendation]
     fallback_used: bool
+
+class WeightUpdateRequest(BaseModel):
+    interest_weights: dict[str, float]
+    tags: list[str]
+    action: Literal["save", "reject"]
+
+
+class WeightUpdateResponse(BaseModel):
+    interest_weights: dict[str, float]
