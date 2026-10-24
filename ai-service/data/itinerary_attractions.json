@@ -1,0 +1,14 @@
+[
+  {"id": 1, "name": "National Museum of History", "latitude": 48.8606, "longitude": 2.3376},
+  {"id": 2, "name": "Old Town Walking Quarter", "latitude": 48.8530, "longitude": 2.3469},
+  {"id": 3, "name": "Cathedral of the Old City", "latitude": 48.8554, "longitude": 2.3500},
+  {"id": 4, "name": "Modern Art Gallery", "latitude": 48.8620, "longitude": 2.3410},
+  {"id": 5, "name": "Botanical Gardens", "latitude": 48.8738, "longitude": 2.2950},
+  {"id": 6, "name": "Skyline Observation Tower", "latitude": 48.8584, "longitude": 2.2945},
+  {"id": 7, "name": "Grand Shopping Arcade", "latitude": 48.8700, "longitude": 2.2990},
+  {"id": 8, "name": "Riverside Night Bars", "latitude": 48.8650, "longitude": 2.2890},
+  {"id": 9, "name": "Central Food Market", "latitude": 48.8450, "longitude": 2.3720},
+  {"id": 10, "name": "Heritage Craft Bazaar", "latitude": 48.8420, "longitude": 2.3650},
+  {"id": 11, "name": "Cooking Class Experience", "latitude": 48.8480, "longitude": 2.3790},
+  {"id": 12, "name": "Ancient Fortress", "latitude": 48.8400, "longitude": 2.3700}
+]

@@ -34,3 +34,9 @@ class WeightUpdateRequest(BaseModel):
 
 class WeightUpdateResponse(BaseModel):
     interest_weights: dict[str, float]
+
+class ItineraryAttraction(BaseModel):
+    id: int
+    name: str
+    latitude: float = Field(ge=-90, le=90)
+    longitude: float = Field(ge=-180, le=180)
