@@ -40,3 +40,19 @@ class ItineraryAttraction(BaseModel):
     name: str
     latitude: float = Field(ge=-90, le=90)
     longitude: float = Field(ge=-180, le=180)
+
+class ItineraryRequest(BaseModel):
+    attractions: list[ItineraryAttraction]
+    num_days: int = Field(ge=1, le=30)
+
+
+class ItineraryDay(BaseModel):
+    day: int
+    morning: list[ItineraryAttraction]
+    afternoon: list[ItineraryAttraction]
+    evening: list[ItineraryAttraction]
+    distance_km: float
+
+
+class ItineraryResponse(BaseModel):
+    days: list[ItineraryDay]

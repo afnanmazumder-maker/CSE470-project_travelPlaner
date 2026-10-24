@@ -99,3 +99,71 @@ def test_order_is_deterministic():
     first = [s.id for s in order_stops(group)]
     second = [s.id for s in order_stops(group)]
     assert first == second
+
+
+from fastapi.testclient import TestClient
+
+from app.itinerary import (
+    build_itinerary,
+    cluster_into_days,
+    distance_km,
+    order_stops,
+    route_length_km,
+    split_into_blocks,
+)
+from app.main import app
+
+def test_split_blocks_sizes():
+    expected = {
+        0: (0, 0, 0),
+        1: (1, 0, 0),
+        2: (1, 1, 0),
+        3: (1, 1, 1),
+        4: (2, 1, 1),
+        5: (2, 2, 1),
+        7: (3, 2, 2),
+    }
+    places = load_places()
+    for count, sizes in expected.items():
+        blocks = split_into_blocks(places[:count])
+        assert tuple(len(b) for b in blocks) == sizes
+
+
+def test_split_blocks_keeps_order():
+    stops = load_places()[:5]
+    morning, afternoon, evening = split_into_blocks(stops)
+    assert [s.id for s in morning + afternoon + evening] == [s.id for s in stops]
+
+
+def test_build_itinerary_covers_every_attraction_once():
+    places = load_places()
+    result = build_itinerary(places, 3)
+    all_ids = [
+        s.id for day in result.days for block in (day.morning, day.afternoon, day.evening) for s in block
+    ]
+    assert sorted(all_ids) == sorted(p.id for p in places)
+
+
+def test_build_itinerary_days_are_numbered_in_order():
+    result = build_itinerary(load_places(), 3)
+    assert [d.day for d in result.days] == [1, 2, 3]
+
+
+def test_build_itinerary_reports_distance():
+    result = build_itinerary(load_places(), 3)
+    assert all(d.distance_km > 0 for d in result.days)
+
+
+def test_api_itinerary_returns_days():
+    client = TestClient(app)
+    body = {"attractions": [p.model_dump() for p in load_places()], "num_days": 3}
+    response = client.post("/itinerary", json=body)
+    assert response.status_code == 200
+    assert len(response.json()["days"]) == 3
+
+
+def test_api_itinerary_rejects_zero_days():
+    client = TestClient(app)
+    body = {"attractions": [p.model_dump() for p in load_places()], "num_days": 0}
+    response = client.post("/itinerary", json=body)
+    assert response.status_code == 422

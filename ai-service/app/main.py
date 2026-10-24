@@ -1,9 +1,10 @@
 from fastapi import FastAPI
 
-from app.recommender import recommend
-from app.schemas import RecommendationRequest, RecommendationResponse
+from app.itinerary import build_itinerary
 from app.recommender import recommend
 from app.schemas import (
+    ItineraryRequest,
+    ItineraryResponse,
     RecommendationRequest,
     RecommendationResponse,
     WeightUpdateRequest,
@@ -11,7 +12,7 @@ from app.schemas import (
 )
 from app.weights import update_weights
 
-app = FastAPI(title="Voyenta AI Service")
+app = FastAPI(title="Voyenta Tour Planner")
 
 
 @app.get("/health")
@@ -32,3 +33,7 @@ def update_interest_weights(request: WeightUpdateRequest):
         request.interest_weights, request.tags, request.action
     )
     return WeightUpdateResponse(interest_weights=new_weights)
+
+@app.post("/itinerary", response_model=ItineraryResponse)
+def generate_itinerary(request: ItineraryRequest):
+    return build_itinerary(request.attractions, request.num_days)

@@ -9,7 +9,7 @@ import math
 import numpy as np
 from sklearn.cluster import KMeans
 
-from app.schemas import ItineraryAttraction
+from app.schemas import ItineraryAttraction, ItineraryDay, ItineraryResponse
 
 EARTH_RADIUS_KM = 6371.0
 
@@ -75,3 +75,32 @@ def order_stops(stops: list[ItineraryAttraction]) -> list[ItineraryAttraction]:
         remaining.remove(nearest)
 
     return route
+
+def split_into_blocks(
+    stops: list[ItineraryAttraction],
+) -> tuple[list[ItineraryAttraction], list[ItineraryAttraction], list[ItineraryAttraction]]:
+    base, extra = divmod(len(stops), 3)
+    sizes = [base + (1 if i < extra else 0) for i in range(3)]
+
+    end_morning = sizes[0]
+    end_afternoon = sizes[0] + sizes[1]
+    return stops[:end_morning], stops[end_morning:end_afternoon], stops[end_afternoon:]
+
+
+def build_itinerary(
+    attractions: list[ItineraryAttraction], num_days: int
+) -> ItineraryResponse:
+    days = []
+    for number, group in enumerate(cluster_into_days(attractions, num_days), start=1):
+        ordered = order_stops(group)
+        morning, afternoon, evening = split_into_blocks(ordered)
+        days.append(
+            ItineraryDay(
+                day=number,
+                morning=morning,
+                afternoon=afternoon,
+                evening=evening,
+                distance_km=round(route_length_km(ordered), 2),
+            )
+        )
+    return ItineraryResponse(days=days)
