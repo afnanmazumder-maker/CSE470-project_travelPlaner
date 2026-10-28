@@ -5,7 +5,8 @@ import Login from './pages/Login'
 import Register from './pages/Register'
 import Destination from './pages/Destination'
 import Explore from './pages/Explore'
-
+import Preferences from './pages/Preferences'
+import Recommendations from './pages/Recommendations'
 export default function App() {
   return (
     <Routes>
@@ -24,6 +25,22 @@ export default function App() {
       element={
         <ProtectedRoute>
           <Explore />
+        </ProtectedRoute>
+      }
+    />
+    <Route
+      path="/preferences"
+      element={
+        <ProtectedRoute>
+          <Preferences />
+        </ProtectedRoute>
+      }
+    />
+    <Route
+      path="/recommendations"
+      element={
+        <ProtectedRoute>
+          <Recommendations />
         </ProtectedRoute>
       }
     />

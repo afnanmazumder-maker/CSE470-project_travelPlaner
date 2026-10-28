@@ -10,3 +10,4 @@ export const MONTHS = [
 
 export const REGIONS = ['Europe', 'Asia']
 export const BUDGET_LEVELS = ['budget', 'moderate', 'luxury']
+export const PACES = ['relaxed', 'moderate', 'packed']

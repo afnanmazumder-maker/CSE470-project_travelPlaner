@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import api, { errorMessage } from '../api'
 import { MONTHS } from '../constants'
-
+import RecommendationsPanel from '../components/RecommendationsPanel'
 export default function Destination() {
   const { id } = useParams()
   const [destination, setDestination] = useState(null)
@@ -78,22 +78,27 @@ export default function Destination() {
         )}
       </dl>
 
-      <h2 className="mt-8 text-2xl font-semibold">Attractions</h2>
-      <ul className="mt-3 space-y-3">
-        {d.attractions.map((a) => (
-          <li key={a.id} className="rounded-lg bg-white p-4 shadow">
-            <div className="flex items-center justify-between">
-              <h3 className="font-semibold">{a.name}</h3>
-              <span className="text-sm text-gray-500">popularity {Math.round(a.popularity * 100)}%</span>
-            </div>
-            <div className="mt-2 flex flex-wrap gap-1">
-              {a.tags.map((t) => (
-                <span key={t} className="rounded bg-blue-50 px-2 py-0.5 text-xs text-blue-700">{t}</span>
-              ))}
-            </div>
-          </li>
-        ))}
-      </ul>
-    </div>
-  )
-}
+            <h2 className="mt-8 text-2xl font-semibold">Attractions</h2>
+        <ul className="mt-3 space-y-3">
+            {d.attractions.map((a) => (
+            <li key={a.id} className="rounded-lg bg-white p-4 shadow">
+                <div className="flex items-center justify-between">
+                <h3 className="font-semibold">{a.name}</h3>
+                <span className="text-sm text-gray-500">popularity {Math.round(a.popularity * 100)}%</span>
+                </div>
+                <div className="mt-2 flex flex-wrap gap-1">
+                {a.tags.map((t) => (
+                    <span key={t} className="rounded bg-blue-50 px-2 py-0.5 text-xs text-blue-700">{t}</span>
+                ))}
+                </div>
+            </li>
+            ))}
+        </ul>
+
+        <h2 className="mt-8 text-2xl font-semibold">Picked for you here</h2>
+        <div className="mt-3">
+            <RecommendationsPanel destinationId={d.id} limit={4} />
+        </div>
+        </div>
+    )
+    }
