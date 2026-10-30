@@ -1,10 +1,10 @@
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { useAuth } from '../AuthContext'
 import { errorMessage } from '../api'
 
 export default function Login() {
-  const { login } = useAuth()
+  const { login, user } = useAuth()
   const navigate = useNavigate()
   const [form, setForm] = useState({ email: '', password: '' })
   const [error, setError] = useState('')
@@ -26,6 +26,10 @@ export default function Login() {
     } finally {
       setSubmitting(false)
     }
+  }
+
+  if (user) {
+    return <Navigate to="/" replace />
   }
 
   return (

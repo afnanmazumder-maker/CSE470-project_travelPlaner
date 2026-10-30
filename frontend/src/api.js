@@ -13,6 +13,17 @@ api.interceptors.request.use((config) => {
   return config
 })
 
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401 && localStorage.getItem('token')) {
+      localStorage.removeItem('token')
+      window.dispatchEvent(new Event('auth:expired'))
+    }
+    return Promise.reject(error)
+  },
+)
+
 export function errorMessage(err) {
   const errors = err.response?.data?.errors
   if (errors) {
