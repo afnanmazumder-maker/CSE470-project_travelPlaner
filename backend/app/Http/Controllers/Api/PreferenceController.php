@@ -42,6 +42,18 @@ class PreferenceController extends Controller
         return response()->json($this->payload($user->fresh()));
     }
 
+    public function skip(Request $request): JsonResponse
+    {
+        $user = $request->user();
+
+        $user->profile()->firstOrCreate([], [
+            'pace' => 'moderate',
+            'budget_band' => 'moderate',
+        ]);
+
+        return response()->json($this->payload($user->fresh()));
+    }
+    
     private function payload(User $user): array
     {
         $profile = $user->profile;

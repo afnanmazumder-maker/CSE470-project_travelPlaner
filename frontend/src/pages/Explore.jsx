@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom'
 import api, { errorMessage } from '../api'
+import DestinationCard from '../components/DestinationCard'
 import { BUDGET_LEVELS, MONTHS, REGIONS, THEMES } from '../constants'
 
 const EMPTY_FILTERS = {
@@ -13,7 +14,8 @@ const EMPTY_FILTERS = {
 }
 
 export default function Explore() {
-  const [filters, setFilters] = useState(EMPTY_FILTERS)
+  const [searchParams] = useSearchParams()
+  const [filters, setFilters] = useState({ ...EMPTY_FILTERS, q: searchParams.get('q') || '' })
   const [page, setPage] = useState(1)
   const [result, setResult] = useState(null)
   const [loading, setLoading] = useState(true)
@@ -60,10 +62,7 @@ export default function Explore() {
 
   return (
     <div className="mx-auto max-w-5xl p-6">
-      <div className="mb-4 flex items-center justify-between">
-        <h1 className="text-3xl font-bold">Explore destinations</h1>
-        <Link className="text-blue-600" to="/">Back to dashboard</Link>
-      </div>
+      <h1 className="mb-4 text-3xl font-bold">Explore destinations</h1>
 
       <div className="mb-6 grid gap-3 rounded-lg bg-white p-4 shadow sm:grid-cols-3">
         <input
@@ -108,23 +107,7 @@ export default function Explore() {
           ) : (
             <div className={`grid gap-4 sm:grid-cols-2 lg:grid-cols-3 ${loading ? 'opacity-60' : ''}`}>
               {result.data.map((d) => (
-                <Link
-                  key={d.id}
-                  to={`/destinations/${d.id}`}
-                  className="rounded-lg bg-white p-4 shadow hover:shadow-md"
-                >
-                  <h2 className="text-xl font-semibold">{d.name}</h2>
-                  <p className="text-sm text-gray-500">{d.country} · {d.region}</p>
-                  <p className="mt-2 line-clamp-3 text-sm text-gray-700">{d.overview}</p>
-                  <div className="mt-3 flex flex-wrap gap-1">
-                    {d.themes.map((t) => (
-                      <span key={t} className="rounded bg-blue-50 px-2 py-0.5 text-xs text-blue-700">{t}</span>
-                    ))}
-                  </div>
-                  <p className="mt-3 text-xs text-gray-500">
-                    {d.budget_level} · safety {d.safety_rating}/5 · {d.attractions_count} attractions
-                  </p>
-                </Link>
+                <DestinationCard key={d.id} destination={d} />
               ))}
             </div>
           )}

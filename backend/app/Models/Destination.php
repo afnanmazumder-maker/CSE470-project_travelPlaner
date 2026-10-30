@@ -10,7 +10,7 @@ class Destination extends Model
     protected $fillable = [
         'name', 'country', 'region', 'overview', 'cuisine', 'budget_level',
         'cost_index', 'climate', 'best_months', 'themes', 'safety_rating',
-        'latitude', 'longitude', 'image_url',
+        'latitude', 'longitude', 'image_url', 'banner_url'
     ];
 
     protected function casts(): array

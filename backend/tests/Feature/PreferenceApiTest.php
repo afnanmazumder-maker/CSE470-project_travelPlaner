@@ -66,4 +66,30 @@ class PreferenceApiTest extends TestCase
             'budget_band' => 'budget',
         ])->assertStatus(422)->assertJsonValidationErrors(['interests.0']);
     }
+        public function test_skipping_marks_the_user_onboarded_without_interests(): void
+    {
+        Sanctum::actingAs(User::factory()->create());
+
+        $this->postJson('/api/preferences/skip')
+            ->assertOk()
+            ->assertJsonPath('onboarded', true)
+            ->assertJsonCount(0, 'interest_weights');
+    }
+
+    public function test_skipping_keeps_existing_interests(): void
+    {
+        $user = User::factory()->create();
+        Sanctum::actingAs($user);
+
+        $this->putJson('/api/preferences', ['interests' => ['history'], 'pace' => 'packed', 'budget_band' => 'budget']);
+        $this->postJson('/api/preferences/skip')->assertOk();
+
+        $this->assertDatabaseHas('interest_weights', ['user_id' => $user->id, 'tag' => 'history']);
+        $this->assertDatabaseHas('profiles', ['user_id' => $user->id, 'pace' => 'packed']);
+    }
+
+    public function test_skip_requires_login(): void
+    {
+        $this->postJson('/api/preferences/skip')->assertUnauthorized();
+    }
 }

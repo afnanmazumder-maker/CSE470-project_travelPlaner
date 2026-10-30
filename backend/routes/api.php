@@ -24,6 +24,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('/preferences', [PreferenceController::class, 'show']);
     Route::put('/preferences', [PreferenceController::class, 'update']);
+    Route::post('/preferences/skip', [PreferenceController::class, 'skip']);
 
     Route::get('/recommendations', [RecommendationController::class, 'index']);
     Route::post('/attractions/{attraction}/feedback', [RecommendationController::class, 'feedback']);

@@ -1,10 +1,14 @@
 import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import api, { errorMessage } from '../api'
-import { MONTHS } from '../constants'
+import { useAuth } from '../AuthContext'
 import RecommendationsPanel from '../components/RecommendationsPanel'
+import { MONTHS } from '../constants'
+import { bannerImage, placeholderStyle } from '../imagery'
+
 export default function Destination() {
   const { id } = useParams()
+  const { user } = useAuth()
   const [destination, setDestination] = useState(null)
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(true)
@@ -44,13 +48,24 @@ export default function Destination() {
   }
 
   const d = destination
+  const banner = bannerImage(d)
 
   return (
     <div className="mx-auto max-w-3xl p-6">
       <Link className="text-blue-600" to="/explore">&larr; Back to explore</Link>
 
-      <h1 className="mt-4 text-4xl font-bold">{d.name}</h1>
-      <p className="text-gray-500">{d.country} · {d.region}</p>
+      <div
+        className="relative mt-4 h-48 overflow-hidden rounded-lg sm:h-64"
+        style={banner ? undefined : placeholderStyle(d.id)}
+      >
+        {banner && <img src={banner} alt={d.name} className="h-full w-full object-cover" />}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+        <div className="absolute bottom-4 left-4 text-white">
+          <h1 className="text-4xl font-bold">{d.name}</h1>
+          <p>{d.country} · {d.region}</p>
+        </div>
+      </div>
+
       <p className="mt-4 text-gray-800">{d.overview}</p>
 
       <dl className="mt-6 grid gap-4 rounded-lg bg-white p-4 shadow sm:grid-cols-2">
@@ -78,27 +93,35 @@ export default function Destination() {
         )}
       </dl>
 
-            <h2 className="mt-8 text-2xl font-semibold">Attractions</h2>
-        <ul className="mt-3 space-y-3">
-            {d.attractions.map((a) => (
-            <li key={a.id} className="rounded-lg bg-white p-4 shadow">
-                <div className="flex items-center justify-between">
-                <h3 className="font-semibold">{a.name}</h3>
-                <span className="text-sm text-gray-500">popularity {Math.round(a.popularity * 100)}%</span>
-                </div>
-                <div className="mt-2 flex flex-wrap gap-1">
-                {a.tags.map((t) => (
-                    <span key={t} className="rounded bg-blue-50 px-2 py-0.5 text-xs text-blue-700">{t}</span>
-                ))}
-                </div>
-            </li>
-            ))}
-        </ul>
+      <h2 className="mt-8 text-2xl font-semibold">Attractions</h2>
+      <ul className="mt-3 space-y-3">
+        {d.attractions.map((a) => (
+          <li key={a.id} className="rounded-lg bg-white p-4 shadow">
+            <div className="flex items-center justify-between">
+              <h3 className="font-semibold">{a.name}</h3>
+              <span className="text-sm text-gray-500">popularity {Math.round(a.popularity * 100)}%</span>
+            </div>
+            <div className="mt-2 flex flex-wrap gap-1">
+              {a.tags.map((t) => (
+                <span key={t} className="rounded bg-blue-50 px-2 py-0.5 text-xs text-blue-700">{t}</span>
+              ))}
+            </div>
+          </li>
+        ))}
+      </ul>
 
-        <h2 className="mt-8 text-2xl font-semibold">Picked for you here</h2>
-        <div className="mt-3">
-            <RecommendationsPanel destinationId={d.id} limit={4} />
-        </div>
-        </div>
-    )
-    }
+      <h2 className="mt-8 text-2xl font-semibold">Picked for you here</h2>
+      <div className="mt-3">
+        {user ? (
+          <RecommendationsPanel destinationId={d.id} limit={4} />
+        ) : (
+          <p className="rounded-lg bg-white p-4 text-gray-700 shadow">
+            <Link className="text-blue-600 underline" to="/login">Log in</Link> or{' '}
+            <Link className="text-blue-600 underline" to="/register">sign up</Link> to see places in {d.name} picked
+            for you.
+          </p>
+        )}
+      </div>
+    </div>
+  )
+}
