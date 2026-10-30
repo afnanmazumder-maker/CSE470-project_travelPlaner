@@ -23,7 +23,10 @@ def health_check():
 @app.post("/recommendations", response_model=RecommendationResponse)
 def get_recommendations(request: RecommendationRequest):
     results, fallback_used = recommend(
-        request.interest_weights, request.attractions, request.limit
+        request.interest_weights,
+        request.attractions,
+        request.limit,
+        request.budget_band,
     )
     return RecommendationResponse(recommendations=results, fallback_used=fallback_used)
 

@@ -121,4 +121,31 @@ class RecommendationApiTest extends TestCase
         $this->postJson("/api/attractions/{$louvre->id}/feedback", ['action' => 'like'])
             ->assertStatus(422);
     }
+
+        public function test_budget_band_and_destination_levels_are_sent(): void
+    {
+        $this->user->profile()->create(['pace' => 'moderate', 'budget_band' => 'budget']);
+        Http::fake(['*' => Http::response(['recommendations' => [], 'fallback_used' => true])]);
+
+        $this->getJson('/api/recommendations')->assertOk();
+
+        Http::assertSent(function ($request) {
+            $body = json_decode($request->body(), true);
+            $levels = array_unique(array_column($body['attractions'], 'budget_level'));
+            sort($levels);
+
+            return $body['budget_band'] === 'budget'
+                && $levels === ['budget', 'luxury', 'moderate'];
+        });
+    }
+
+    public function test_budget_band_is_null_without_a_profile(): void
+    {
+        Http::fake(['*' => Http::response(['recommendations' => [], 'fallback_used' => true])]);
+
+        $this->getJson('/api/recommendations')->assertOk();
+
+        Http::assertSent(fn ($request) => json_decode($request->body(), true)['budget_band'] === null);
+    }
+
 }
