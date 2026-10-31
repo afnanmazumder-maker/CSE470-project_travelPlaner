@@ -3,7 +3,9 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\BudgetController;
 use App\Http\Controllers\Api\DestinationController;
+use App\Http\Controllers\Api\ExpenseController;
 use App\Http\Controllers\Api\PreferenceController;
 use App\Http\Controllers\Api\RecommendationController;
 
@@ -28,6 +30,12 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('/recommendations', [RecommendationController::class, 'index']);
     Route::post('/attractions/{attraction}/feedback', [RecommendationController::class, 'feedback']);
+
+    Route::post('/budgets/estimate', [BudgetController::class, 'estimate']);
+    Route::get('/budgets/{budget}/suggestions', [BudgetController::class, 'suggestions']);
+    Route::apiResource('budgets', BudgetController::class);
+    Route::post('/budgets/{budget}/expenses', [ExpenseController::class, 'store']);
+    Route::delete('/budgets/{budget}/expenses/{expense}', [ExpenseController::class, 'destroy']);
 });
 
 Route::get('/destinations', [DestinationController::class, 'index']);

@@ -24,3 +24,15 @@ export const INTEREST_INFO = {
 export const REGIONS = ['Europe', 'Asia']
 export const BUDGET_LEVELS = ['budget', 'moderate', 'luxury']
 export const PACES = ['relaxed', 'moderate', 'packed']
+
+export const BUDGET_CATEGORIES = {
+  flights: 'Flights',
+  stay: 'Stay',
+  food: 'Food',
+  transport: 'Transport',
+  activities: 'Activities',
+  visa: 'Visa',
+  insurance: 'Insurance',
+  shopping: 'Shopping',
+  emergency: 'Emergency buffer',
+}

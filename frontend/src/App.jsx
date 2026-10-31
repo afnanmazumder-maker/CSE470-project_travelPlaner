@@ -1,6 +1,8 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
 import Layout from './components/Layout'
 import ProtectedRoute from './components/ProtectedRoute'
+import BudgetDashboard from './pages/BudgetDashboard'
+import Budgets from './pages/Budgets'
 import Destination from './pages/Destination'
 import Explore from './pages/Explore'
 import Landing from './pages/Landing'
@@ -41,6 +43,22 @@ export default function App() {
           element={
             <ProtectedRoute>
               <Preferences />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/budgets"
+          element={
+            <ProtectedRoute>
+              <Budgets />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/budgets/:id"
+          element={
+            <ProtectedRoute>
+              <BudgetDashboard />
             </ProtectedRoute>
           }
         />
