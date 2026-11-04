@@ -51,3 +51,25 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/phrases/{phrase}/favorite', [\App\Http\Controllers\Api\PhraseController::class, 'favorite']);
     Route::delete('/phrases/{phrase}/favorite', [\App\Http\Controllers\Api\PhraseController::class, 'unfavorite']);
 });
+
+// R9: flight and stay search, price alerts and bookings (flight data is admin-managed).
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/flights/options', [\App\Http\Controllers\Api\FlightController::class, 'options']);
+    Route::get('/flights/search', [\App\Http\Controllers\Api\FlightController::class, 'search']);
+    Route::post('/flights/multi-city', [\App\Http\Controllers\Api\FlightController::class, 'multiCity']);
+    Route::get('/flights/price-calendar', [\App\Http\Controllers\Api\FlightController::class, 'priceCalendar']);
+    Route::get('/price-alerts', [\App\Http\Controllers\Api\FlightController::class, 'alerts']);
+    Route::post('/price-alerts', [\App\Http\Controllers\Api\FlightController::class, 'storeAlert']);
+    Route::delete('/price-alerts/{priceAlert}', [\App\Http\Controllers\Api\FlightController::class, 'destroyAlert']);
+    Route::get('/stays/options', [\App\Http\Controllers\Api\AccommodationController::class, 'options']);
+    Route::get('/stays/search', [\App\Http\Controllers\Api\AccommodationController::class, 'search']);
+    Route::get('/stays/{accommodation}', [\App\Http\Controllers\Api\AccommodationController::class, 'show']);
+    Route::apiResource('bookings', \App\Http\Controllers\Api\BookingController::class);
+
+    Route::middleware(\App\Http\Middleware\EnsureUserIsAdmin::class)->prefix('admin')->group(function () {
+        Route::get('/flights', [\App\Http\Controllers\Api\FlightController::class, 'adminIndex']);
+        Route::post('/flights', [\App\Http\Controllers\Api\FlightController::class, 'adminStore']);
+        Route::put('/flights/{flight}', [\App\Http\Controllers\Api\FlightController::class, 'adminUpdate']);
+        Route::delete('/flights/{flight}', [\App\Http\Controllers\Api\FlightController::class, 'adminDestroy']);
+    });
+});
