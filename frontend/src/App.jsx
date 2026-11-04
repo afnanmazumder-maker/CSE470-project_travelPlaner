@@ -6,6 +6,7 @@ import Budgets from './pages/Budgets'
 import Destination from './pages/Destination'
 import Explore from './pages/Explore'
 import Landing from './pages/Landing'
+import LanguageHelper from './pages/LanguageHelper'
 import Login from './pages/Login'
 import Onboarding from './pages/Onboarding'
 import Preferences from './pages/Preferences'
@@ -30,6 +31,7 @@ export default function App() {
         <Route path="/" element={<Landing />} />
         <Route path="/explore" element={<Explore />} />
         <Route path="/destinations/:id" element={<Destination />} />
+        <Route path="/phrasebook" element={<LanguageHelper />} />
         <Route
           path="/recommendations"
           element={

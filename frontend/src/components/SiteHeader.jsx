@@ -14,6 +14,7 @@ export default function SiteHeader() {
 
         <nav className="flex flex-wrap items-center gap-1 text-sm">
           <NavLink to="/explore" className={linkClass}>Explore</NavLink>
+          <NavLink to="/phrasebook" className={linkClass}>Phrasebook</NavLink>
 
           {user ? (
             <>
