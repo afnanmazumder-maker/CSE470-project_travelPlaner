@@ -40,3 +40,14 @@ Route::middleware('auth:sanctum')->group(function () {
 
 Route::get('/destinations', [DestinationController::class, 'index']);
 Route::get('/destinations/{destination}', [DestinationController::class, 'show']);
+
+// R13: language helper and cultural tips (browsing is public, favorites need a login).
+Route::get('/phrases/languages', [\App\Http\Controllers\Api\PhraseController::class, 'languages']);
+Route::get('/phrases', [\App\Http\Controllers\Api\PhraseController::class, 'index']);
+Route::get('/cultural-tips/countries', [\App\Http\Controllers\Api\PhraseController::class, 'countries']);
+Route::get('/cultural-tips', [\App\Http\Controllers\Api\PhraseController::class, 'tips']);
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/phrases/favorites', [\App\Http\Controllers\Api\PhraseController::class, 'favorites']);
+    Route::post('/phrases/{phrase}/favorite', [\App\Http\Controllers\Api\PhraseController::class, 'favorite']);
+    Route::delete('/phrases/{phrase}/favorite', [\App\Http\Controllers\Api\PhraseController::class, 'unfavorite']);
+});
