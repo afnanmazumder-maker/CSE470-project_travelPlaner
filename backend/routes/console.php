@@ -12,3 +12,6 @@ Artisan::command('inspire', function () {
 
 // R16: reminders and daily digests; dedupe keys make repeated runs safe.
 \Illuminate\Support\Facades\Schedule::command('reminders:dispatch')->everyFifteenMinutes()->withoutOverlapping();
+
+// R8: ECB publishes reference rates around 16:00 CET.
+\Illuminate\Support\Facades\Schedule::command('rates:refresh')->dailyAt('15:30')->withoutOverlapping();
