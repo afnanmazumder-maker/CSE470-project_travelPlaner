@@ -1,5 +1,6 @@
 import { Link, NavLink } from 'react-router-dom'
 import { useAuth } from '../AuthContext'
+import NotificationBell from './NotificationBell'
 
 const linkClass = ({ isActive }) =>
   `px-2 py-1 ${isActive ? 'font-semibold text-blue-700' : 'text-gray-700 hover:text-blue-700'}`
@@ -22,6 +23,7 @@ export default function SiteHeader() {
               <NavLink to="/preferences" className={linkClass}>Interests</NavLink>
               <NavLink to="/budgets" className={linkClass}>Budgets</NavLink>
               <NavLink to="/flights" className={linkClass}>Travel</NavLink>
+              <NotificationBell />
               <span className="px-2 text-gray-500">{user.name}</span>
               <button className="rounded border px-3 py-1" onClick={logout}>Log out</button>
             </>
