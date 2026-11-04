@@ -164,7 +164,8 @@ class BudgetService
 
         $spentByCategory = array_fill_keys(self::CATEGORIES, 0.0);
         foreach ($budget->expenses as $expense) {
-            $spentByCategory[$expense->category] += $expense->amount;
+            // R8 adds "other" (unplanned) expenses: they count towards the total but have no plan line here.
+            $spentByCategory[$expense->category] = ($spentByCategory[$expense->category] ?? 0) + $expense->amount;
         }
 
         $categories = [];

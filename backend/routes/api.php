@@ -85,3 +85,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/timeline', [\App\Http\Controllers\Api\NotificationController::class, 'timeline']);
     Route::get('/budgets/{budget}/timeline', [\App\Http\Controllers\Api\NotificationController::class, 'budgetTimeline']);
 });
+
+// R8: spend plan vs actual and the variance report (expenses are added through R7's expense routes).
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/currencies', [\App\Http\Controllers\Api\SpendTrackerController::class, 'currencies']);
+    Route::get('/budgets/{budget}/deviation', [\App\Http\Controllers\Api\SpendTrackerController::class, 'show']);
+    Route::put('/budgets/{budget}/tracking', [\App\Http\Controllers\Api\SpendTrackerController::class, 'updateTracking']);
+    Route::get('/budgets/{budget}/variance-report', [\App\Http\Controllers\Api\SpendTrackerController::class, 'report']);
+    Route::get('/budgets/{budget}/variance-report.csv', [\App\Http\Controllers\Api\SpendTrackerController::class, 'reportCsv']);
+});
