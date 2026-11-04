@@ -17,8 +17,10 @@ import Onboarding from './pages/Onboarding'
 import Preferences from './pages/Preferences'
 import Recommendations from './pages/Recommendations'
 import Register from './pages/Register'
+import SpendTracker from './pages/SpendTracker'
 import StaySearch from './pages/StaySearch'
 import Timeline from './pages/Timeline'
+import VarianceReport from './pages/VarianceReport'
 
 export default function App() {
   return (
@@ -124,6 +126,22 @@ export default function App() {
           element={
             <ProtectedRoute>
               <NotificationSettings />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/budgets/:id/spending"
+          element={
+            <ProtectedRoute>
+              <SpendTracker />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/budgets/:id/report"
+          element={
+            <ProtectedRoute>
+              <VarianceReport />
             </ProtectedRoute>
           }
         />
