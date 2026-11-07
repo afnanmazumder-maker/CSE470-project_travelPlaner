@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import api, { errorMessage } from '../api'
 import { useAuth } from '../AuthContext'
+import FloatingNotice from '../components/FloatingNotice'
 import TravelTabs from '../components/TravelTabs'
 import { dayTime, duration, label } from '../travelFormat'
 
@@ -102,8 +103,7 @@ export default function FlightAdmin() {
       <h1 className="text-3xl font-bold">Flight data</h1>
       <p className="text-gray-600">Fares here are what travelers search. Lowering a fare re-checks price alerts on that route.</p>
 
-      {notice && <p className="mt-4 rounded bg-green-50 p-2 text-green-800">{notice}</p>}
-      {error && <p className="mt-4 rounded bg-red-50 p-2 text-red-700">{error}</p>}
+      <FloatingNotice notice={notice} error={error} setNotice={setNotice} setError={setError} />
 
       <div className="mt-6 flex flex-wrap items-end gap-3 text-sm">
         <select className="rounded border px-3 py-2" value={filters.origin} onChange={(e) => { setPage(1); setFilters({ ...filters, origin: e.target.value }) }}>{airportOptions}</select>

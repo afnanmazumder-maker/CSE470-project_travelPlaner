@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import api, { errorMessage } from '../api'
+import FloatingNotice from '../components/FloatingNotice'
 import TravelTabs from '../components/TravelTabs'
 import { money } from '../format'
 import { clock, day, duration, label } from '../travelFormat'
@@ -215,8 +216,7 @@ export default function FlightSearch() {
         </label>
       </div>
 
-      {notice && <p className="mt-4 rounded bg-green-50 p-2 text-green-800">{notice}</p>}
-      {error && <p className="mt-4 rounded bg-red-50 p-2 text-red-700">{error}</p>}
+      <FloatingNotice notice={notice} error={error} setNotice={setNotice} setError={setError} />
 
       <div className="mt-6 flex flex-wrap gap-1 border-b text-sm">
         {Object.entries(TABS).map(([key, text]) => (

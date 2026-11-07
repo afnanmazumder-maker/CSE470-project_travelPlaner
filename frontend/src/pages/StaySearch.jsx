@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import api, { errorMessage } from '../api'
+import FloatingNotice from '../components/FloatingNotice'
 import TravelTabs from '../components/TravelTabs'
 import { money } from '../format'
 import { label } from '../travelFormat'
@@ -62,7 +63,12 @@ export default function StaySearch() {
 
   useEffect(() => {
     if (!L || !mapElement.current || map.current) return
-    map.current = L.map(mapElement.current).setView([13.7563, 100.5018], 12)
+    // The mouse wheel scrolls the page, not the map, until the traveler clicks into
+    // the map; clicking elsewhere hands the wheel back to the page.
+    const m = L.map(mapElement.current, { scrollWheelZoom: false }).setView([13.7563, 100.5018], 12)
+    m.on('focus', () => m.scrollWheelZoom.enable())
+    m.on('blur', () => m.scrollWheelZoom.disable())
+    map.current = m
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
       attribution: '&copy; OpenStreetMap contributors',
@@ -143,8 +149,7 @@ export default function StaySearch() {
         </label>
       </div>
 
-      {notice && <p className="mt-4 rounded bg-green-50 p-2 text-green-800">{notice}</p>}
-      {error && <p className="mt-4 rounded bg-red-50 p-2 text-red-700">{error}</p>}
+      <FloatingNotice notice={notice} error={error} setNotice={setNotice} setError={setError} />
 
       <div className="mt-6 grid gap-6 lg:grid-cols-[300px_1fr]">
         <form className="space-y-3 rounded-lg bg-white p-4 shadow" onSubmit={(e) => e.preventDefault()}>
@@ -213,6 +218,7 @@ export default function StaySearch() {
               <button className="rounded border px-3 py-1" disabled={!L} onClick={searchMapArea}>Search this map area</button>
             </div>
             <div ref={mapElement} className="h-96 rounded" />
+            <p className="mt-1 text-xs text-gray-500">Click the map to zoom with the mouse wheel, or use + and −.</p>
           </div>
 
           <ul className="divide-y rounded-lg bg-white shadow">

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import api, { errorMessage } from '../api'
+import FloatingNotice from '../components/FloatingNotice'
 import TravelTabs from '../components/TravelTabs'
 import { money } from '../format'
 import { dayTime } from '../travelFormat'
@@ -97,7 +98,7 @@ export default function Bookings() {
       <h1 className="text-3xl font-bold">My bookings</h1>
       <p className="text-gray-600">Records you keep for organisation. Cancellation and payment dates drive your reminders.</p>
 
-      {error && <p className="mt-4 rounded bg-red-50 p-2 text-red-700">{error}</p>}
+      <FloatingNotice error={error} setError={setError} />
 
       <div className="mt-6 flex flex-wrap gap-3 text-sm">
         <select className="rounded border px-3 py-2" value={filters.budget_id} onChange={(e) => setFilters({ ...filters, budget_id: e.target.value })}>
