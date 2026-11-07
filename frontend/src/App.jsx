@@ -1,16 +1,21 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
 import Layout from './components/Layout'
 import ProtectedRoute from './components/ProtectedRoute'
+import Bookings from './pages/Bookings'
 import BudgetDashboard from './pages/BudgetDashboard'
 import Budgets from './pages/Budgets'
 import Destination from './pages/Destination'
 import Explore from './pages/Explore'
+import FlightAdmin from './pages/FlightAdmin'
+import FlightSearch from './pages/FlightSearch'
 import Landing from './pages/Landing'
+import LanguageHelper from './pages/LanguageHelper'
 import Login from './pages/Login'
 import Onboarding from './pages/Onboarding'
 import Preferences from './pages/Preferences'
 import Recommendations from './pages/Recommendations'
 import Register from './pages/Register'
+import StaySearch from './pages/StaySearch'
 
 export default function App() {
   return (
@@ -30,6 +35,7 @@ export default function App() {
         <Route path="/" element={<Landing />} />
         <Route path="/explore" element={<Explore />} />
         <Route path="/destinations/:id" element={<Destination />} />
+        <Route path="/phrasebook" element={<LanguageHelper />} />
         <Route
           path="/recommendations"
           element={
@@ -59,6 +65,38 @@ export default function App() {
           element={
             <ProtectedRoute>
               <BudgetDashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/flights"
+          element={
+            <ProtectedRoute>
+              <FlightSearch />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/stays"
+          element={
+            <ProtectedRoute>
+              <StaySearch />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/bookings"
+          element={
+            <ProtectedRoute>
+              <Bookings />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/flights"
+          element={
+            <ProtectedRoute>
+              <FlightAdmin />
             </ProtectedRoute>
           }
         />
