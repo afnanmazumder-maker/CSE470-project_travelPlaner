@@ -135,6 +135,11 @@ export default function BudgetDashboard() {
         </button>
       </div>
 
+      <p className="mt-2 flex flex-wrap gap-3 text-sm">
+        <Link className="text-blue-600" to={`/budgets/${id}/spending`}>Track spending in any currency →</Link>
+        <Link className="text-blue-600" to={`/budgets/${id}/report`}>Variance report →</Link>
+      </p>
+
       <div className="mt-6 rounded-lg bg-white p-4 shadow">
         <div className="flex flex-wrap justify-between gap-2">
           <p>

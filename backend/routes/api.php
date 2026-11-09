@@ -73,3 +73,24 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::delete('/flights/{flight}', [\App\Http\Controllers\Api\FlightController::class, 'adminDestroy']);
     });
 });
+
+// R16: notifications, reminders and the trip timeline.
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/notifications', [\App\Http\Controllers\Api\NotificationController::class, 'index']);
+    Route::post('/notifications/read-all', [\App\Http\Controllers\Api\NotificationController::class, 'markAllRead']);
+    Route::post('/notifications/{notification}/read', [\App\Http\Controllers\Api\NotificationController::class, 'markRead']);
+    Route::get('/notification-settings', [\App\Http\Controllers\Api\NotificationController::class, 'settings']);
+    Route::put('/notification-settings', [\App\Http\Controllers\Api\NotificationController::class, 'updateSettings']);
+    Route::post('/reminders/run', [\App\Http\Controllers\Api\NotificationController::class, 'runReminders']);
+    Route::get('/timeline', [\App\Http\Controllers\Api\NotificationController::class, 'timeline']);
+    Route::get('/budgets/{budget}/timeline', [\App\Http\Controllers\Api\NotificationController::class, 'budgetTimeline']);
+});
+
+// R8: spend plan vs actual and the variance report (expenses are added through R7's expense routes).
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/currencies', [\App\Http\Controllers\Api\SpendTrackerController::class, 'currencies']);
+    Route::get('/budgets/{budget}/deviation', [\App\Http\Controllers\Api\SpendTrackerController::class, 'show']);
+    Route::put('/budgets/{budget}/tracking', [\App\Http\Controllers\Api\SpendTrackerController::class, 'updateTracking']);
+    Route::get('/budgets/{budget}/variance-report', [\App\Http\Controllers\Api\SpendTrackerController::class, 'report']);
+    Route::get('/budgets/{budget}/variance-report.csv', [\App\Http\Controllers\Api\SpendTrackerController::class, 'reportCsv']);
+});
