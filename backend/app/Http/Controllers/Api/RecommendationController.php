@@ -27,16 +27,17 @@ class RecommendationController extends Controller
         $user = $request->user();
         $weights = $user->interestWeights()->pluck('weight', 'tag')->all();
         $budgetBand = $user->profile?->budget_band;
-
+        $pace = $user->profile?->pace;
         $payload = $attractions->map(fn ($a) => [
             'id' => $a->id,
             'name' => $a->name,
             'tags' => $a->tags,
             'popularity' => $a->popularity,
             'budget_level' => $a->destination?->budget_level,
+            'intensity' => $a->intensity,
         ])->values()->all();
 
-        $result = $ai->recommend($weights, $payload, $limit, $budgetBand);
+        $result = $ai->recommend($weights, $payload, $limit, $budgetBand, $pace);
         $available = $result !== null;
 
         if (! $available) {

@@ -7,13 +7,19 @@ use Illuminate\Support\Facades\Http;
 
 class AiService
 {
-    public function recommend(array $weights, array $attractions, int $limit, ?string $budgetBand = null): ?array
-    {
+    public function recommend(
+        array $weights,
+        array $attractions,
+        int $limit,
+        ?string $budgetBand = null,
+        ?string $pace = null,
+    ): ?array {
         return $this->post('/recommendations', [
             'interest_weights' => (object) $weights,
             'attractions' => $attractions,
             'limit' => $limit,
             'budget_band' => $budgetBand,
+            'pace' => $pace,
         ]);
     }
 

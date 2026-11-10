@@ -99,7 +99,9 @@ export default function Destination() {
           <li key={a.id} className="rounded-lg bg-white p-4 shadow">
             <div className="flex items-center justify-between">
               <h3 className="font-semibold">{a.name}</h3>
-              <span className="text-sm text-gray-500">popularity {Math.round(a.popularity * 100)}%</span>
+              <span className="text-sm text-gray-500">
+                {a.intensity} · popularity {Math.round(a.popularity * 100)}%
+              </span>
             </div>
             <div className="mt-2 flex flex-wrap gap-1">
               {a.tags.map((t) => (

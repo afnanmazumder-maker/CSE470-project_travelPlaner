@@ -3,6 +3,8 @@ from typing import Literal
 from pydantic import BaseModel, Field
 
 BudgetLevel = Literal["budget", "moderate", "luxury"]
+Pace = Literal["relaxed", "moderate", "packed"]
+Intensity = Literal["easy", "moderate", "demanding"]
 
 class Attraction(BaseModel):
     id: int
@@ -10,6 +12,7 @@ class Attraction(BaseModel):
     tags: list[str]
     popularity: float = Field(ge=0, le=1)
     budget_level: BudgetLevel | None = None
+    intensity: Intensity | None = None
 
 
 class RecommendationRequest(BaseModel):
@@ -17,6 +20,7 @@ class RecommendationRequest(BaseModel):
     attractions: list[Attraction]
     limit: int = Field(default=10, ge=1, le=50)
     budget_band: BudgetLevel | None = None
+    pace: Pace | None = None
 
 
 class Recommendation(BaseModel):

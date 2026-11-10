@@ -102,8 +102,38 @@ class DestinationSeeder extends Seeder
             ],
         ];
 
+            $intensity = [
+            'Louvre Museum' => 'demanding',
+            'Eiffel Tower' => 'moderate',
+            'Notre-Dame Cathedral' => 'easy',
+            'Montmartre and Sacre-Coeur' => 'moderate',
+            'Colosseum' => 'moderate',
+            'Vatican Museums' => 'demanding',
+            'Trevi Fountain' => 'easy',
+            'Pantheon' => 'easy',
+            'Senso-ji Temple' => 'easy',
+            'Meiji Shrine' => 'easy',
+            'Tsukiji Outer Market' => 'moderate',
+            'Shibuya Crossing' => 'easy',
+            'Hagia Sophia' => 'easy',
+            'Blue Mosque' => 'easy',
+            'Grand Bazaar' => 'moderate',
+            'Topkapi Palace' => 'moderate',
+            'Grand Palace' => 'moderate',
+            'Wat Arun' => 'moderate',
+            'Chatuchak Weekend Market' => 'demanding',
+            'Khao San Road' => 'moderate',
+            'Tanah Lot Temple' => 'easy',
+            'Uluwatu Temple and Cliffs' => 'moderate',
+            'Tegallalang Rice Terraces' => 'moderate',
+            'Kuta Beach' => 'easy',
+        ];
+
         foreach ($destinations as $row) {
-            $attractions = $row['attractions'];
+            $attractions = array_map(
+                fn ($a) => $a + ['intensity' => $intensity[$a['name']] ?? 'moderate'],
+                $row['attractions']
+            );
             unset($row['attractions']);
 
             $destination = Destination::updateOrCreate(
@@ -114,5 +144,6 @@ class DestinationSeeder extends Seeder
             $destination->attractions()->delete();
             $destination->attractions()->createMany($attractions);
         }
-    }
+
+}
 }

@@ -27,6 +27,7 @@ def get_recommendations(request: RecommendationRequest):
         request.attractions,
         request.limit,
         request.budget_band,
+        request.pace,
     )
     return RecommendationResponse(recommendations=results, fallback_used=fallback_used)
 
