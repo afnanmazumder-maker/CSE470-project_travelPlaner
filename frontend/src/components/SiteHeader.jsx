@@ -1,5 +1,7 @@
 import { Link, NavLink } from 'react-router-dom'
 import { useAuth } from '../AuthContext'
+import NotificationBell from './NotificationBell'
+import { TravelNavLink } from './TravelTabs'
 
 const linkClass = ({ isActive }) =>
   `px-2 py-1 ${isActive ? 'font-semibold text-blue-700' : 'text-gray-700 hover:text-blue-700'}`
@@ -14,11 +16,15 @@ export default function SiteHeader() {
 
         <nav className="flex flex-wrap items-center gap-1 text-sm">
           <NavLink to="/explore" className={linkClass}>Explore</NavLink>
+          <NavLink to="/phrasebook" className={linkClass}>Phrasebook</NavLink>
 
           {user ? (
             <>
               <NavLink to="/recommendations" className={linkClass}>For you</NavLink>
               <NavLink to="/preferences" className={linkClass}>Interests</NavLink>
+              <NavLink to="/budgets" className={linkClass}>Budgets</NavLink>
+              <TravelNavLink className={linkClass} />
+              <NotificationBell />
               <span className="px-2 text-gray-500">{user.name}</span>
               <button className="rounded border px-3 py-1" onClick={logout}>Log out</button>
             </>
