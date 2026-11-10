@@ -12,28 +12,32 @@ use Illuminate\Http\JsonResponse;
 
 class RecommendationController extends Controller
 {
-    public function index(RecommendationRequest $request, AiService $ai): JsonResponse
+       public function index(RecommendationRequest $request, AiService $ai): JsonResponse
     {
         $data = $request->validated();
         $limit = $data['limit'] ?? 10;
 
-        $attractions = Attraction::with('destination:id,name,country')
+        $attractions = Attraction::with('destination:id,name,country,budget_level')
             ->when(
                 isset($data['destination_id']),
                 fn ($query) => $query->where('destination_id', $data['destination_id'])
             )
             ->get();
 
-        $weights = $request->user()->interestWeights()->pluck('weight', 'tag')->all();
-
+        $user = $request->user();
+        $weights = $user->interestWeights()->pluck('weight', 'tag')->all();
+        $budgetBand = $user->profile?->budget_band;
+        $pace = $user->profile?->pace;
         $payload = $attractions->map(fn ($a) => [
             'id' => $a->id,
             'name' => $a->name,
             'tags' => $a->tags,
             'popularity' => $a->popularity,
+            'budget_level' => $a->destination?->budget_level,
+            'intensity' => $a->intensity,
         ])->values()->all();
 
-        $result = $ai->recommend($weights, $payload, $limit);
+        $result = $ai->recommend($weights, $payload, $limit, $budgetBand, $pace);
         $available = $result !== null;
 
         if (! $available) {
