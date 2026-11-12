@@ -7,7 +7,7 @@ use App\Models\Phrase;
 use Illuminate\Database\Seeder;
 
 /**
- * R13: phrasebook for 10 languages (16 phrases each, in the order of ENGLISH)
+ * R15: phrasebook for 10 languages (16 phrases each, in the order of ENGLISH)
  * and etiquette notes for 10 countries. Run: php artisan db:seed --class=LanguageSeeder
  */
 class LanguageSeeder extends Seeder

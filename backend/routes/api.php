@@ -41,7 +41,7 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::get('/destinations', [DestinationController::class, 'index']);
 Route::get('/destinations/{destination}', [DestinationController::class, 'show']);
 
-// R13: language helper and cultural tips (browsing is public, favorites need a login).
+// R15: language helper and cultural tips (browsing is public, favorites need a login).
 Route::get('/phrases/languages', [\App\Http\Controllers\Api\PhraseController::class, 'languages']);
 Route::get('/phrases', [\App\Http\Controllers\Api\PhraseController::class, 'index']);
 Route::get('/cultural-tips/countries', [\App\Http\Controllers\Api\PhraseController::class, 'countries']);

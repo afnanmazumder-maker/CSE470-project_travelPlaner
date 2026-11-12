@@ -1,6 +1,6 @@
 # R8 — Spend Plan vs Actual Cost Tracker and Deviation Report
 
-**Owner:** Afnan Mazumder (24141229) · **Branch:** `feature/afnan-r8-spend-tracker` · **Merge order:** 4 of 5 (after R13, R9, R16)
+**Owner:** Afnan Mazumder (24141229) · **Branch:** `feature/afnan-r8-spend-tracker` · **Merge order:** 4 of 5 (after R15, R9, R16)
 
 > SRS R8: Expenses are logged in local currency and converted to home currency using daily Frankfurter rates
 > (cached and refreshed on a schedule), storing the rate used. Each expense is matched to its planned category and

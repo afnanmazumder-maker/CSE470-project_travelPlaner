@@ -11,7 +11,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 /**
- * R13: phrasebook with pronunciation, saved favorites and cultural tips.
+ * R15: phrasebook with pronunciation, saved favorites and cultural tips.
  * Browsing is public; favorites need a login.
  */
 class PhraseController extends Controller

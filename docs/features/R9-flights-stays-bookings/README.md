@@ -1,6 +1,6 @@
 # R9 — Flight and Stay Search and Booking Management
 
-**Owner:** Afnan Mazumder (24141229) · **Branch:** `feature/afnan-r9-flights-stays` · **Merge order:** 2 of 5 (after R13)
+**Owner:** Afnan Mazumder (24141229) · **Branch:** `feature/afnan-r9-flights-stays` · **Merge order:** 2 of 5 (after R15)
 
 > SRS R9: Searches admin-managed flight data by origin, destination, dates, passengers, and cabin class, sorted
 > and filtered by price, duration, stops, and departure time, with multi-city trips, a flexible-date price
@@ -43,7 +43,7 @@ Shared files touched (appended edits only): `backend/routes/api.php` (one R9 blo
 (one schedule line), `frontend/src/App.jsx` (4 imports, 4 routes), `frontend/src/components/SiteHeader.jsx` ("Travel" link).
 
 Notes for the team:
-- The new `users.role` column (default `traveler`) is the admin flag; the R18 admin dashboard can reuse it.
+- The new `users.role` column (default `traveler`) is the admin flag; the admin dashboard (R20) can reuse it.
 - Leaflet loads from cdnjs only on the stay page, so `package.json` is unchanged. If the team prefers
   `react-leaflet` (as the SRS lists), it can replace `useLeaflet.js` later.
 - Flight and booking times are local wall-clock times, serialized as `2026-12-05T10:30` (no time zone).

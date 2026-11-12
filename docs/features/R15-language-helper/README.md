@@ -1,10 +1,12 @@
-# R13 — Language Helper and Cultural Tips
+# R15 — Language Helper and Cultural Tips
 
 **Owner:** Afnan Mazumder (24141229) · **Branch:** `feature/afnan-r13-language-helper` · **Merge order:** 1 of 5 (no dependencies)
 
-> SRS R13: Phrasebook for the top 10 languages (greetings, food, directions, emergencies) with pronunciation
+> SRS R15: Phrasebook for the top 10 languages (greetings, food, directions, emergencies) with pronunciation
 > and saved favorites, plus etiquette notes on tipping, dress code, customs, and business hours.
 > Machine translation is added later.
+
+The first commits and the branch name call this feature R13. It is R15 in the SRS, so it is labelled R15 from here on.
 
 ## What it does
 
@@ -29,7 +31,7 @@
 | Tests | `backend/tests/Feature/PhraseApiTest.php` (8 tests) |
 
 Shared files touched (small, appended edits only):
-`backend/routes/api.php` (one R13 block at the end), `frontend/src/App.jsx` (one import, one route),
+`backend/routes/api.php` (one R15 block at the end), `frontend/src/App.jsx` (one import, one route),
 `frontend/src/components/SiteHeader.jsx` (one "Phrasebook" link).
 
 ## API
