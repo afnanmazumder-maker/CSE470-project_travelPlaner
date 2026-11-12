@@ -96,7 +96,7 @@ export default function Bookings() {
     <div className="mx-auto max-w-5xl p-6">
       <TravelTabs />
       <h1 className="text-3xl font-bold">My bookings</h1>
-      <p className="text-gray-600">Records you keep for organisation. Cancellation and payment dates drive your reminders.</p>
+      <p className="text-gray-600">Records you keep for organisation, with cancellation and payment dates.</p>
 
       <FloatingNotice error={error} setError={setError} />
 
