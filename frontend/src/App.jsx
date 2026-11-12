@@ -8,6 +8,9 @@ import Destination from './pages/Destination'
 import Explore from './pages/Explore'
 import FlightAdmin from './pages/FlightAdmin'
 import FlightSearch from './pages/FlightSearch'
+import GroupTrips from './pages/GroupTrips'
+import ItineraryBoard from './pages/ItineraryBoard'
+import JoinTrip from './pages/JoinTrip'
 import Landing from './pages/Landing'
 import LanguageHelper from './pages/LanguageHelper'
 import Login from './pages/Login'
@@ -38,6 +41,23 @@ export default function App() {
         <Route path="/explore" element={<Explore />} />
         <Route path="/destinations/:id" element={<Destination />} />
         <Route path="/phrasebook" element={<LanguageHelper />} />
+        <Route path="/join/:token" element={<JoinTrip />} />
+        <Route
+          path="/trips"
+          element={
+            <ProtectedRoute>
+              <GroupTrips />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/trips/:id"
+          element={
+            <ProtectedRoute>
+              <ItineraryBoard />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/recommendations"
           element={

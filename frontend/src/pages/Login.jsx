@@ -1,11 +1,13 @@
 import { useState } from 'react'
-import { Link, Navigate, useNavigate } from 'react-router-dom'
+import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '../AuthContext'
 import { errorMessage } from '../api'
 
 export default function Login() {
   const { login, user } = useAuth()
   const navigate = useNavigate()
+  // R16: an invite link sends people here first and expects them back afterwards.
+  const from = useLocation().state?.from ?? '/'
   const [form, setForm] = useState({ email: '', password: '' })
   const [error, setError] = useState('')
   const [submitting, setSubmitting] = useState(false)
@@ -20,7 +22,7 @@ export default function Login() {
     setSubmitting(true)
     try {
       await login(form)
-      navigate('/')
+      navigate(from)
     } catch (err) {
       setError(errorMessage(err))
     } finally {
@@ -29,7 +31,7 @@ export default function Login() {
   }
 
   if (user) {
-    return <Navigate to="/" replace />
+    return <Navigate to={from} replace />
   }
 
   return (

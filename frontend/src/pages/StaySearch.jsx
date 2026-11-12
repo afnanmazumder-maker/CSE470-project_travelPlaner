@@ -28,7 +28,7 @@ export default function StaySearch() {
   const [error, setError] = useState('')
 
   useEffect(() => {
-    Promise.all([api.get('/destinations', { params: { per_page: 50 } }), api.get('/stays/options'), api.get('/budgets')])
+    Promise.all([api.get('/destinations', { params: { per_page: 50 } }), api.get('/stays/options'), api.get('/trips', { params: { can_edit: 1 } })])
       .then(([destinationRes, optionRes, budgetRes]) => {
         setDestinations(destinationRes.data.data)
         setOptions(optionRes.data)

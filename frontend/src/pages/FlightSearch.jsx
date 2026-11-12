@@ -79,7 +79,7 @@ export default function FlightSearch() {
   const [alertForm, setAlertForm] = useState({ origin: 'DAC', destination: 'BKK', depart_date: '', cabin_class: 'economy', target_price: '' })
 
   useEffect(() => {
-    Promise.all([api.get('/flights/options'), api.get('/budgets'), api.get('/price-alerts')])
+    Promise.all([api.get('/flights/options'), api.get('/trips', { params: { can_edit: 1 } }), api.get('/price-alerts')])
       .then(([optionRes, budgetRes, alertRes]) => {
         setOptions(optionRes.data)
         setBudgets(budgetRes.data)

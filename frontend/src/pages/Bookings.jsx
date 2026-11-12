@@ -31,7 +31,7 @@ export default function Bookings() {
   const [reload, setReload] = useState(0)
 
   useEffect(() => {
-    api.get('/budgets').then((res) => setBudgets(res.data)).catch((err) => setError(errorMessage(err)))
+    api.get('/trips', { params: { can_edit: 1 } }).then((res) => setBudgets(res.data)).catch((err) => setError(errorMessage(err)))
   }, [])
 
   useEffect(() => {
@@ -106,7 +106,7 @@ export default function Bookings() {
           {budgets.map((b) => <option key={b.id} value={b.id}>{b.title}</option>)}
         </select>
         <select className="rounded border px-3 py-2" value={filters.type} onChange={(e) => setFilters({ ...filters, type: e.target.value })}>
-          <option value="">Flights and stays</option><option value="flight">Flights</option><option value="stay">Stays</option>
+          <option value="">All types</option><option value="flight">Flights</option><option value="stay">Stays</option><option value="activity">Activities</option>
         </select>
         <select className="rounded border px-3 py-2" value={filters.status} onChange={(e) => setFilters({ ...filters, status: e.target.value })}>
           <option value="">Any status</option><option>planned</option><option>confirmed</option><option>cancelled</option>
@@ -123,7 +123,7 @@ export default function Bookings() {
               <li key={b.id} className="grid gap-3 p-4 md:grid-cols-[1fr_auto]">
                 <div>
                   <p className="font-semibold">
-                    {b.type === 'flight' ? '✈️' : '🏨'} {b.title}
+                    {{ flight: '✈️', stay: '🏨', activity: '🎟️' }[b.type]} {b.title}
                     <span className={`ml-2 rounded px-2 py-0.5 text-xs ${STATUS_STYLE[b.status]}`}>{b.status}</span>
                   </p>
                   <p className="text-sm text-gray-600">
@@ -165,7 +165,7 @@ export default function Bookings() {
       <h2 className="mt-8 text-2xl font-semibold">Add a booking by hand</h2>
       <form onSubmit={add} className="mt-3 grid gap-3 rounded-lg bg-white p-4 shadow sm:grid-cols-2 lg:grid-cols-4">
         <label className="text-sm">Type
-          <select className={inputClass} value={form.type} onChange={field('type')}><option value="stay">Stay</option><option value="flight">Flight</option></select>
+          <select className={inputClass} value={form.type} onChange={field('type')}><option value="stay">Stay</option><option value="flight">Flight</option><option value="activity">Activity</option></select>
         </label>
         <label className="text-sm">Trip
           <select className={inputClass} value={form.budget_id} onChange={field('budget_id')}>

@@ -22,6 +22,7 @@ export default function SiteHeader() {
               <NavLink to="/recommendations" className={linkClass}>For you</NavLink>
               <NavLink to="/preferences" className={linkClass}>Interests</NavLink>
               <NavLink to="/budgets" className={linkClass}>Budgets</NavLink>
+              <NavLink to="/trips" className={linkClass}>Group trips</NavLink>
               <TravelNavLink className={linkClass} />
               <span className="px-2 text-gray-500">{user.name}</span>
               <button className="rounded border px-3 py-1" onClick={logout}>Log out</button>
