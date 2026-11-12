@@ -74,18 +74,6 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 });
 
-// R16: notifications, reminders and the trip timeline.
-Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/notifications', [\App\Http\Controllers\Api\NotificationController::class, 'index']);
-    Route::post('/notifications/read-all', [\App\Http\Controllers\Api\NotificationController::class, 'markAllRead']);
-    Route::post('/notifications/{notification}/read', [\App\Http\Controllers\Api\NotificationController::class, 'markRead']);
-    Route::get('/notification-settings', [\App\Http\Controllers\Api\NotificationController::class, 'settings']);
-    Route::put('/notification-settings', [\App\Http\Controllers\Api\NotificationController::class, 'updateSettings']);
-    Route::post('/reminders/run', [\App\Http\Controllers\Api\NotificationController::class, 'runReminders']);
-    Route::get('/timeline', [\App\Http\Controllers\Api\NotificationController::class, 'timeline']);
-    Route::get('/budgets/{budget}/timeline', [\App\Http\Controllers\Api\NotificationController::class, 'budgetTimeline']);
-});
-
 // R8: spend plan vs actual and the variance report (expenses are added through R7's expense routes).
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/currencies', [\App\Http\Controllers\Api\SpendTrackerController::class, 'currencies']);
@@ -93,4 +81,20 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/budgets/{budget}/tracking', [\App\Http\Controllers\Api\SpendTrackerController::class, 'updateTracking']);
     Route::get('/budgets/{budget}/variance-report', [\App\Http\Controllers\Api\SpendTrackerController::class, 'report']);
     Route::get('/budgets/{budget}/variance-report.csv', [\App\Http\Controllers\Api\SpendTrackerController::class, 'reportCsv']);
+});
+
+// R16: group trip collaboration (members, invites, shared itinerary, votes, comments, history).
+Route::get('/invites/{token}', [\App\Http\Controllers\Api\TripMemberController::class, 'showInvite']);
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/trips', [\App\Http\Controllers\Api\TripMemberController::class, 'trips']);
+    Route::post('/invites/{token}/accept', [\App\Http\Controllers\Api\TripMemberController::class, 'accept']);
+    Route::get('/budgets/{budget}/members', [\App\Http\Controllers\Api\TripMemberController::class, 'index']);
+    Route::post('/budgets/{budget}/invites', [\App\Http\Controllers\Api\TripMemberController::class, 'store']);
+    Route::patch('/budgets/{budget}/members/{member}', [\App\Http\Controllers\Api\TripMemberController::class, 'update']);
+    Route::delete('/budgets/{budget}/members/{member}', [\App\Http\Controllers\Api\TripMemberController::class, 'destroy']);
+    Route::get('/budgets/{budget}/board', [\App\Http\Controllers\Api\ItineraryBoardController::class, 'show']);
+    Route::get('/budgets/{budget}/activity', [\App\Http\Controllers\Api\ItineraryBoardController::class, 'activity']);
+    Route::post('/budgets/{budget}/items/{booking}/comments', [\App\Http\Controllers\Api\CommentController::class, 'store']);
+    Route::put('/budgets/{budget}/items/{booking}/vote', [\App\Http\Controllers\Api\CommentController::class, 'vote']);
+    Route::delete('/comments/{comment}', [\App\Http\Controllers\Api\CommentController::class, 'destroy']);
 });

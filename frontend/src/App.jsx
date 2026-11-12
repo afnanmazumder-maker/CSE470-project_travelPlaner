@@ -8,18 +8,18 @@ import Destination from './pages/Destination'
 import Explore from './pages/Explore'
 import FlightAdmin from './pages/FlightAdmin'
 import FlightSearch from './pages/FlightSearch'
+import GroupTrips from './pages/GroupTrips'
+import ItineraryBoard from './pages/ItineraryBoard'
+import JoinTrip from './pages/JoinTrip'
 import Landing from './pages/Landing'
 import LanguageHelper from './pages/LanguageHelper'
 import Login from './pages/Login'
-import NotificationSettings from './pages/NotificationSettings'
-import Notifications from './pages/Notifications'
 import Onboarding from './pages/Onboarding'
 import Preferences from './pages/Preferences'
 import Recommendations from './pages/Recommendations'
 import Register from './pages/Register'
 import SpendTracker from './pages/SpendTracker'
 import StaySearch from './pages/StaySearch'
-import Timeline from './pages/Timeline'
 import VarianceReport from './pages/VarianceReport'
 
 export default function App() {
@@ -41,6 +41,23 @@ export default function App() {
         <Route path="/explore" element={<Explore />} />
         <Route path="/destinations/:id" element={<Destination />} />
         <Route path="/phrasebook" element={<LanguageHelper />} />
+        <Route path="/join/:token" element={<JoinTrip />} />
+        <Route
+          path="/trips"
+          element={
+            <ProtectedRoute>
+              <GroupTrips />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/trips/:id"
+          element={
+            <ProtectedRoute>
+              <ItineraryBoard />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/recommendations"
           element={
@@ -102,30 +119,6 @@ export default function App() {
           element={
             <ProtectedRoute>
               <FlightAdmin />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/timeline"
-          element={
-            <ProtectedRoute>
-              <Timeline />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/notifications"
-          element={
-            <ProtectedRoute>
-              <Notifications />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/notification-settings"
-          element={
-            <ProtectedRoute>
-              <NotificationSettings />
             </ProtectedRoute>
           }
         />

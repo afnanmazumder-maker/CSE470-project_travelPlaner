@@ -79,7 +79,7 @@ export default function FlightSearch() {
   const [alertForm, setAlertForm] = useState({ origin: 'DAC', destination: 'BKK', depart_date: '', cabin_class: 'economy', target_price: '' })
 
   useEffect(() => {
-    Promise.all([api.get('/flights/options'), api.get('/budgets'), api.get('/price-alerts')])
+    Promise.all([api.get('/flights/options'), api.get('/trips', { params: { can_edit: 1 } }), api.get('/price-alerts')])
       .then(([optionRes, budgetRes, alertRes]) => {
         setOptions(optionRes.data)
         setBudgets(budgetRes.data)
@@ -405,6 +405,9 @@ export default function FlightSearch() {
                       {a.depart_date ? day(a.depart_date) : 'Next 90 days'} · last seen {a.last_seen_price ? money(a.last_seen_price) : '—'}
                       {a.target_price ? ` · target ${money(a.target_price)}` : ''}
                     </p>
+                    {a.last_notified_price !== null && (
+                      <p className="text-green-700">Dropped to {money(a.last_notified_price)}. We emailed you.</p>
+                    )}
                   </div>
                   <button className="text-red-700" onClick={() => deleteAlert(a.id)}>Delete</button>
                 </li>

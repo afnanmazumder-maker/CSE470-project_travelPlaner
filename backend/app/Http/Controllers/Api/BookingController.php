@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreBookingRequest;
 use App\Models\Booking;
 use App\Models\Budget;
+use App\Services\TripMemberService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -75,10 +76,13 @@ class BookingController extends Controller
         return response()->json(['message' => 'Booking deleted']);
     }
 
+    /**
+     * Saving to a trip needs its owner, or (R16) an owner or editor of the group trip.
+     */
     private function authorizeBudget(?int $budgetId): void
     {
         if ($budgetId !== null) {
-            Gate::authorize('manage', Budget::findOrFail($budgetId));
+            Gate::allowIf(app(TripMemberService::class)->canEdit(Budget::findOrFail($budgetId), request()->user()));
         }
     }
 }

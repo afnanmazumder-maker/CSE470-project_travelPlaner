@@ -19,8 +19,8 @@ class StoreBookingRequest extends FormRequest
         return [
             'type' => ['required', Rule::in(Booking::TYPES)],
             'budget_id' => ['nullable', 'integer', 'exists:budgets,id'],
-            'flight_id' => ['nullable', 'integer', 'exists:flights,id', 'prohibited_if:type,stay'],
-            'accommodation_id' => ['nullable', 'integer', 'exists:accommodations,id', 'prohibited_if:type,flight'],
+            'flight_id' => ['nullable', 'integer', 'exists:flights,id', 'prohibited_unless:type,flight'],
+            'accommodation_id' => ['nullable', 'integer', 'exists:accommodations,id', 'prohibited_unless:type,stay'],
             'title' => ['required', 'string', 'max:255'],
             'provider' => ['nullable', 'string', 'max:255'],
             'confirmation_number' => ['nullable', 'string', 'max:40'],

@@ -1,6 +1,6 @@
 # R8 — Spend Plan vs Actual Cost Tracker and Deviation Report
 
-**Owner:** Afnan Mazumder (24141229) · **Branch:** `feature/afnan-r8-spend-tracker` · **Merge order:** 4 of 5 (after R15, R9, R16)
+**Owner:** Afnan Mazumder (24141229) · **Branch:** `feature/afnan-r8-spend-tracker` · **Merge order:** 4 of 5 (after R15 and R9)
 
 > SRS R8: Expenses are logged in local currency and converted to home currency using daily Frankfurter rates
 > (cached and refreshed on a schedule), storing the rate used. Each expense is matched to its planned category and
@@ -40,8 +40,8 @@ empty date as today. A regression test covers it.
   `rates:refresh`. If Frankfurter is down, the newest stored rate is used and the expense records `rate_source = fallback`.
 - **Deviation** per category, per trip day (after setting the start date) and for the whole trip, as an amount and a %.
   Flights, visa and insurance are planned on day 0 (pre-trip); the rest is spread evenly over the trip days.
-- **Threshold alerts** (default 10%) fire **once per crossing** as an R16 `budget_alert` notification and re-arm when
-  spending falls back under.
+- **Threshold alerts** (default 10%) fire **once per crossing**: the alert shows on the spend page when the expense is
+  saved, and re-arms when spending falls back under.
 - **Variance report** with insights, category bars, a cumulative chart, currencies used and top expenses.
   **CSV** downloads from the API. **PDF** uses the browser's "Save as PDF" on a print-ready page, so no new
   Composer package was added. If the team approves `barryvdh/laravel-dompdf` (listed in the SRS), a server-side PDF can be added.

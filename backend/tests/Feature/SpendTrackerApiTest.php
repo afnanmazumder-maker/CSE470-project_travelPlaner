@@ -4,7 +4,6 @@ namespace Tests\Feature;
 
 use App\Models\Budget;
 use App\Models\Destination;
-use App\Models\Notification;
 use App\Models\User;
 use Database\Seeders\DestinationSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -143,12 +142,9 @@ class SpendTrackerApiTest extends TestCase
             ->json('expense.id');
 
         $this->addExpense(['currency' => 'USD', 'amount' => 5])->assertJsonPath('deviation_alerts', []);
-        $this->assertSame(1, Notification::where('type', 'budget_alert')->count());
 
         $this->deleteJson("/api/budgets/{$this->budget->id}/expenses/{$big}")->assertOk();
         $this->addExpense(['currency' => 'USD', 'amount' => 120])->assertJsonCount(1, 'deviation_alerts');
-
-        $this->assertSame(2, Notification::where('type', 'budget_alert')->where('user_id', $this->user->id)->count());
     }
 
     public function test_raising_the_threshold_clears_the_alert_state(): void

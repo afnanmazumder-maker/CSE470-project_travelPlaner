@@ -22,8 +22,6 @@ class DeviationService
 
     public const UNPLANNED_LABEL = 'Miscellaneous / Unplanned';
 
-    public function __construct(private NotificationService $notifications) {}
-
     /**
      * @return array<string, mixed>
      */
@@ -149,8 +147,8 @@ class DeviationService
     }
 
     /**
-     * Raises a budget_alert (R16) each time a category or the whole trip crosses
-     * the threshold, and re-arms it when spending falls back under.
+     * Returns an alert each time a category or the whole trip crosses the
+     * threshold, and re-arms it when spending falls back under.
      *
      * @return list<string> titles of the alerts raised
      */
@@ -169,7 +167,7 @@ class DeviationService
 
             if ($isAlert && ! $wasAlert) {
                 $alerted[] = $key;
-                $raised[] = $this->alert($budget, $row);
+                $raised[] = $this->alertTitle($row);
             } elseif (! $isAlert && $wasAlert) {
                 $alerted = array_values(array_diff($alerted, [$key]));
             }
@@ -266,23 +264,9 @@ class DeviationService
     /**
      * @param  array<string, mixed>  $row
      */
-    private function alert(Budget $budget, array $row): string
+    private function alertTitle(array $row): string
     {
-        $title = "{$row['name']} is {$row['deviation_pct']}% over plan";
-
-        $this->notifications->notify(
-            $budget->user,
-            'budget_alert',
-            $title,
-            sprintf(
-                'You have spent $%s against a plan of $%s on "%s" ($%s over).',
-                number_format($row['actual'], 2), number_format($row['planned'], 2), $budget->title, number_format($row['deviation'], 2),
-            ),
-            ['row' => $row],
-            $budget,
-        );
-
-        return $title;
+        return "{$row['name']} is {$row['deviation_pct']}% over plan";
     }
 
     /**

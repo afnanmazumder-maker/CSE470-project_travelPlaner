@@ -3,7 +3,6 @@
 namespace Tests\Unit;
 
 use App\Services\DeviationService;
-use App\Services\NotificationService;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
@@ -14,7 +13,7 @@ class DeviationServiceTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->service = new DeviationService(new NotificationService);
+        $this->service = new DeviationService;
     }
 
     /** @return array<string, array{float, float, string, float|null}> */
