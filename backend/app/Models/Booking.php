@@ -2,13 +2,16 @@
 
 namespace App\Models;
 
+use App\Observers\BookingObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+#[ObservedBy([BookingObserver::class])]
 class Booking extends Model
 {
     /** @var list<string> */
-    public const TYPES = ['flight', 'stay'];
+    public const TYPES = ['flight', 'stay', 'activity'];
 
     /** @var list<string> */
     public const STATUSES = ['planned', 'confirmed', 'cancelled'];

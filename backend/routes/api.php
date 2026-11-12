@@ -82,3 +82,19 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/budgets/{budget}/variance-report', [\App\Http\Controllers\Api\SpendTrackerController::class, 'report']);
     Route::get('/budgets/{budget}/variance-report.csv', [\App\Http\Controllers\Api\SpendTrackerController::class, 'reportCsv']);
 });
+
+// R16: group trip collaboration (members, invites, shared itinerary, votes, comments, history).
+Route::get('/invites/{token}', [\App\Http\Controllers\Api\TripMemberController::class, 'showInvite']);
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/trips', [\App\Http\Controllers\Api\TripMemberController::class, 'trips']);
+    Route::post('/invites/{token}/accept', [\App\Http\Controllers\Api\TripMemberController::class, 'accept']);
+    Route::get('/budgets/{budget}/members', [\App\Http\Controllers\Api\TripMemberController::class, 'index']);
+    Route::post('/budgets/{budget}/invites', [\App\Http\Controllers\Api\TripMemberController::class, 'store']);
+    Route::patch('/budgets/{budget}/members/{member}', [\App\Http\Controllers\Api\TripMemberController::class, 'update']);
+    Route::delete('/budgets/{budget}/members/{member}', [\App\Http\Controllers\Api\TripMemberController::class, 'destroy']);
+    Route::get('/budgets/{budget}/board', [\App\Http\Controllers\Api\ItineraryBoardController::class, 'show']);
+    Route::get('/budgets/{budget}/activity', [\App\Http\Controllers\Api\ItineraryBoardController::class, 'activity']);
+    Route::post('/budgets/{budget}/items/{booking}/comments', [\App\Http\Controllers\Api\CommentController::class, 'store']);
+    Route::put('/budgets/{budget}/items/{booking}/vote', [\App\Http\Controllers\Api\CommentController::class, 'vote']);
+    Route::delete('/comments/{comment}', [\App\Http\Controllers\Api\CommentController::class, 'destroy']);
+});
