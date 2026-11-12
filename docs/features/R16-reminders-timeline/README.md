@@ -1,6 +1,6 @@
 # R16 — Notifications, Reminders and Trip Timeline
 
-**Owner:** Afnan Mazumder (24141229) · **Branch:** `feature/afnan-r16-reminders` · **Merge order:** 3 of 5 (after R13 and R9)
+**Owner:** Afnan Mazumder (24141229) · **Branch:** `feature/afnan-r16-reminders` · **Merge order:** 3 of 5 (after R15 and R9)
 
 > SRS R16: Scheduled email and in-app alerts for check-in opening, flights within 24 hours, visa deadlines,
 > payments, and document expiry; a daily digest on travel days; one timeline of flights, stays, and activities;
@@ -21,7 +21,7 @@
 - A 🔔 bell in the header shows the unread count.
 
 Not covered yet, because the features they depend on are not on `main`: **visa deadlines** need R6 and
-**document expiry** needs R15. The scan is built so each can be added as one more method in `ReminderService`
+**document expiry** needs the Travel Document Vault. The scan is built so each can be added as one more method in `ReminderService`
 when those tables exist. Activities join the timeline when R5 stores itinerary days in Laravel.
 
 ## MVC files in this package
