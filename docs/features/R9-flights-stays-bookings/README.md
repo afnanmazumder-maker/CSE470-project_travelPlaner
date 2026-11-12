@@ -15,8 +15,8 @@
 - **Multi-city** search (2–6 legs in date order) with the cheapest total.
 - **Flexible-date price calendar**: the cheapest fare for every day of a month, banded green / amber / red.
 - **Price-drop alerts**: watch a route (optionally a date and a target price). When an admin changes a fare, or the
-  hourly `price-alerts:check` runs, a drop fires the `FlightPriceDropped` event. **R16 turns that event into a
-  notification**, so this package works on its own and R16 plugs in without editing it.
+  hourly `price-alerts:check` runs, a drop fires the `FlightPriceDropped` event. **The traveler gets an email**
+  (`EmailPriceDropAlert`), and the alert list shows the new low price.
 - **Stay search** on the six destinations with filters (price, rating, km from the centre, property type, all
   selected amenities), sorting, and **map search** with price pins (Leaflet + OpenStreetMap).
 - **Bookings** for flights and stays: confirmation number, dates, status, price, cancellation deadline and payment

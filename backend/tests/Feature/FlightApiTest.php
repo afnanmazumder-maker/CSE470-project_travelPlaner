@@ -3,10 +3,12 @@
 namespace Tests\Feature;
 
 use App\Events\FlightPriceDropped;
+use App\Mail\PriceDropMail;
 use App\Models\Flight;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Testing\TestResponse;
 use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
@@ -143,6 +145,21 @@ class FlightApiTest extends TestCase
             ->assertJsonCount(1, 'announced');
 
         Event::assertDispatchedTimes(FlightPriceDropped::class, 1);
+    }
+
+    public function test_a_price_drop_emails_the_traveler_who_watches_the_route(): void
+    {
+        Mail::fake();
+        $traveler = User::factory()->create();
+        Sanctum::actingAs($traveler);
+
+        $this->postJson('/api/price-alerts', ['origin' => 'DAC', 'destination' => 'BKK', 'cabin_class' => 'economy', 'target_price' => 120])
+            ->assertCreated();
+
+        Mail::assertSent(PriceDropMail::class, fn (PriceDropMail $mail): bool => $mail->hasTo($traveler->email)
+            && $mail->price === 90.0
+            && str_contains($mail->envelope()->subject, 'DAC → BKK fares dropped to $90.00'));
+        $this->getJson('/api/price-alerts')->assertJsonPath('0.last_notified_price', 90);
     }
 
     public function test_alerts_are_private_to_their_owner(): void
