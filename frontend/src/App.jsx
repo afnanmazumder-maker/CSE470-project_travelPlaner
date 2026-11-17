@@ -21,6 +21,8 @@ import Register from './pages/Register'
 import SpendTracker from './pages/SpendTracker'
 import StaySearch from './pages/StaySearch'
 import VarianceReport from './pages/VarianceReport'
+import VisaAdmin from './pages/VisaAdmin'
+import VisaChecker from './pages/VisaChecker'
 
 export default function App() {
   return (
@@ -135,6 +137,15 @@ export default function App() {
           element={
             <ProtectedRoute>
               <VarianceReport />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="/visa" element={<VisaChecker />} />
+        <Route
+          path="/admin/visa"
+          element={
+            <ProtectedRoute>
+              <VisaAdmin />
             </ProtectedRoute>
           }
         />

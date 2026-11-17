@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import api, { errorMessage } from '../api'
+import VisaNotice from '../components/VisaNotice'
 import { BUDGET_CATEGORIES } from '../constants'
 import { money } from '../format'
 
@@ -139,6 +140,8 @@ export default function BudgetDashboard() {
         <Link className="text-blue-600" to={`/budgets/${id}/spending`}>Track spending in any currency →</Link>
         <Link className="text-blue-600" to={`/budgets/${id}/report`}>Variance report →</Link>
       </p>
+
+      <VisaNotice budgetId={id} />
 
       <div className="mt-6 rounded-lg bg-white p-4 shadow">
         <div className="flex flex-wrap justify-between gap-2">
