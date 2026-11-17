@@ -98,3 +98,16 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/budgets/{budget}/items/{booking}/vote', [\App\Http\Controllers\Api\CommentController::class, 'vote']);
     Route::delete('/comments/{comment}', [\App\Http\Controllers\Api\CommentController::class, 'destroy']);
 });
+
+// R6: visa and entry requirement checker (checking is public; saved passport, trip warning and admin need a login).
+Route::get('/visa/countries', [\App\Http\Controllers\Api\VisaController::class, 'countries']);
+Route::get('/visa/check', [\App\Http\Controllers\Api\VisaController::class, 'check']);
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/visa/passport', [\App\Http\Controllers\Api\VisaController::class, 'passport']);
+    Route::put('/visa/passport', [\App\Http\Controllers\Api\VisaController::class, 'updatePassport']);
+    Route::get('/budgets/{budget}/visa', [\App\Http\Controllers\Api\VisaController::class, 'budget']);
+
+    Route::middleware(\App\Http\Middleware\EnsureUserIsAdmin::class)->prefix('admin')->group(function () {
+        Route::apiResource('visa-requirements', \App\Http\Controllers\Api\VisaAdminController::class)->except('show');
+    });
+});
